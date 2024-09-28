@@ -23,6 +23,7 @@ export class DataTable {
 
 export default function Home() {
   const [file, setFile] = useState<DataTable | null>(null);
+  const [activeFile, setActiveFile] = useState(false);
 
   const handleUploadFile = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
@@ -93,80 +94,86 @@ export default function Home() {
 
     setFile(uploadFile);
   };
-
-  /////////////////////////////
-
-  /////////////////////////////
+  const handleChangeActiveFile = () => {
+    if (file && file.rows.length > 0) {
+      setActiveFile(true);
+    }
+  };
 
   return (
     <>
-      <Card style={{ maxWidth: "500px", margin: "auto" }}>
-        <CardContent className="p-6 space-y-4">
-          <div className="border-2 border-dashed border-gray-200 rounded-lg flex flex-col gap-1 p-6 items-center">
-            <span className="text-sm font-medium text-gray-500">
-              Drag and drop a file or click to browse
-            </span>
-            <span className="text-xs text-gray-500">
-              PDF, image, video, or audio
-            </span>
-          </div>
-          <div className="space-y-2 text-sm">
-            <Label htmlFor="file" className="text-sm font-medium">
-              File
-            </Label>
-            <Input
-              onChange={(event) => handleUploadFile(event)}
-              id="file"
-              type="file"
-              placeholder="File"
-              accept=".csv*"
-            />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button size="lg">Upload</Button>
-        </CardFooter>
-      </Card>
-      <Table style={{ maxWidth: "1000px", margin: "auto" }}>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        {file && file.rows.length > 0 && (
-          <>
-            <TableHeader>
-              <TableRow>
-                {file.rows[0].map((cell, cellIndex) => (
-                  <TableHead key={cellIndex}>
-                    <input
-                      type="text"
-                      value={cell}
-                      onChange={(event) =>
-                        handleCellChange(event, cellIndex, 0)
-                      }
-                    ></input>
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {file.rows.slice(1).map((row, index) => (
-                <TableRow key={index}>
-                  {row.map((cell, cellIndex) => (
-                    <TableCell key={cellIndex}>
+      {!file ? (
+        <Card style={{ maxWidth: "500px", margin: "auto" }}>
+          <CardContent className="p-6 space-y-4">
+            <div className="border-2 border-dashed border-gray-200 rounded-lg flex flex-col gap-1 p-6 items-center">
+              <span className="text-xs text-gray-500">
+                Выберете CSV или XLSX файл
+              </span>
+            </div>
+            <div className="space-y-2 text-sm">
+              <Label htmlFor="file" className="text-sm font-medium">
+                File
+              </Label>
+              <Input
+                onChange={(event) => handleUploadFile(event)}
+                id="file"
+                type="file"
+                placeholder="File"
+                accept=".csv*"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <Button
+          onClick={() => {
+            setFile(null);
+          }}
+        >
+          Выбрать новый файл
+        </Button>
+      )}
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Table style={{ maxWidth: "1000px", marginLeft: "30px" }}>
+          {file && file.rows.length > 0 && (
+            <>
+              <TableHeader>
+                <TableRow>
+                  {file.rows[0].map((cell, cellIndex) => (
+                    <TableHead key={cellIndex}>
                       <input
                         type="text"
                         value={cell}
                         onChange={(event) =>
-                          handleCellChange(event, cellIndex, index + 1)
+                          handleCellChange(event, cellIndex, 0)
                         }
                       ></input>
-                    </TableCell>
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </>
-        )}
-      </Table>
-      <DataChart rawData={file} />
+              </TableHeader>
+              <TableBody>
+                {file.rows.slice(1).map((row, index) => (
+                  <TableRow key={index}>
+                    {row.map((cell, cellIndex) => (
+                      <TableCell key={cellIndex}>
+                        <input
+                          type="text"
+                          value={cell}
+                          onChange={(event) =>
+                            handleCellChange(event, cellIndex, index + 1)
+                          }
+                        ></input>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </>
+          )}
+        </Table>
+        <DataChart rawData={file} />
+      </div>
     </>
   );
 }
