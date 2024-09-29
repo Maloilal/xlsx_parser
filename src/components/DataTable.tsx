@@ -29,7 +29,7 @@ export function DataTable(props: DataTableProps) {
 
     console.log(rawData);
 
-    onDataChange(rawData);
+    onDataChange({ ...rawData });
   };
 
   return (
