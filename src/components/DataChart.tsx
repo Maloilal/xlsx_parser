@@ -1,4 +1,4 @@
-import { DataTable } from "./page";
+import { FileData } from "../app/page";
 import {
   ChartConfig,
   ChartContainer,
@@ -34,11 +34,13 @@ interface ChartRow {
 }
 
 interface DataChartProps {
-  rawData: DataTable | null;
+  rawData: FileData | null;
 }
 
 export const DataChart = (props: DataChartProps) => {
   const { rawData } = props;
+
+  console.log("rawData", rawData);
 
   if (!rawData) {
     return;
@@ -95,10 +97,10 @@ export const DataChart = (props: DataChartProps) => {
 
   const averagePrice = totalQty > 0 ? totalValue / totalQty : 0;
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <ChartContainer
         config={chartConfig}
-        className="min-h-[200px] w-full max-h-[700px]"
+        className="min-h-[200px] min-w-[1500px] max-h-[700px]"
       >
         <BarChart accessibilityLayer data={chartData}>
           {Array.from(uniqueProducts).map((p) => (
@@ -115,6 +117,8 @@ export const DataChart = (props: DataChartProps) => {
           <ChartTooltip cursor={false} />
           <Legend />
         </BarChart>
+      </ChartContainer>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Badge style={{ height: "50px", marginLeft: "20px" }}>
           Общий объём запасов: {totalValue}
         </Badge>
@@ -124,7 +128,7 @@ export const DataChart = (props: DataChartProps) => {
         <Badge style={{ height: "50px", marginLeft: "20px" }}>
           Общее количество единиц товаров на складе:{totalQty}
         </Badge>
-      </ChartContainer>
-    </>
+      </div>
+    </div>
   );
 };
