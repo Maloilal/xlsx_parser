@@ -9,10 +9,7 @@ import * as XLSX from "xlsx";
 
 import { DataChart } from "../components/DataChart";
 import { DataTable } from "@/components/DataTable";
-
-export class FileData {
-  public rows: string[][] = [];
-}
+import { FileData } from "@/lib/models";
 
 export default function Home() {
   const [file, setFile] = useState<FileData | null>(null);

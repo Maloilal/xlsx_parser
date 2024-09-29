@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileData } from "@/app/page";
+import { FileData } from "@/lib/models";
 import React, { ChangeEvent } from "react";
 
 interface DataTableProps {

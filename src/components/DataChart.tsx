@@ -1,4 +1,4 @@
-import { FileData } from "../app/page";
+import { FileData } from "@/lib/models";
 import {
   ChartConfig,
   ChartContainer,
