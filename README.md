@@ -1,5 +1,12 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## App usage
+
+1. Open URL: https://TBD
+2. Download [a relative link](Задание для Frontend Разработчика.xlsx).
+3. Upload file to the form.
+4. See the results.
+
 ## Getting Started
 
 First, run the development server:
