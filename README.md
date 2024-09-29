@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## App usage
 
-1. Open URL: https://xlsx-parser-ahvs-aknf62cws-maloilals-projects.vercel.app/
+1. Open URL: https://xlsx-parser-ahvs.vercel.app/
 2. Download [file with test data](test_data.xlsx)
 3. Upload file to the form.
 4. See the results.
